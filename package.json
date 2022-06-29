@@ -21,5 +21,13 @@
   },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AKC068/bookedicts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AKC068/bookedicts/issues"
+  },
+  "homepage": "https://github.com/AKC068/bookedicts#readme"
 }
