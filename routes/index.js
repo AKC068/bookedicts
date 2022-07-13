@@ -4,11 +4,21 @@ var passport=require("passport");
 var User=require("../models/user");
 
 
-router.get('/',(req,res)=>res.render("landing"));
+router.get("/",function (req, res) {
+    if(req.user) {
+      res.redirect("/books");
+    } else {
+      res.render("landing");
+    }
+  });
 
 
 router.get("/register",(req,res)=>{
+  if(req.user) {
+    res.redirect("/");
+  } else {
     res.render("register");
+  }
 });
 
 router.post("/register", (req,res)=>{
@@ -29,8 +39,13 @@ router.post("/register", (req,res)=>{
 //login routh================
 
 router.get("/login",(req,res)=>{
+  if(req.user) {
+    res.redirect("/");
+  } else {
     res.render("login");
+  }
 });
+
 router.post("/login",passport.authenticate("local",{
   successRedirect:"/books",
   failureRedirect:"/login"

@@ -16,6 +16,7 @@ router.get("/books",(req,res)=>{
 });
 
 router.get("/add_books",middleware.isLoggedIn,(req,res)=>res.render("add_books"));
+
 router.post('/add_books',middleware.isLoggedIn,(req,res)=>{
    var name=req.body.name;
    var price=req.body.price;
