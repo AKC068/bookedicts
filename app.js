@@ -16,8 +16,7 @@ var bookRoutes = require("./routes/books.js"),
 const dotenv = require("dotenv");
 dotenv.config();
 
-const db = process.env.MONGO_DB;
-mongoose.connect(db, {
+mongoose.connect(process.env.MONGO_DB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -54,7 +53,7 @@ app.use(bookRoutes);
 app.use(commentRoutes);
 app.use(indexRoutes);
 
-var PORT = 4000;
-app.listen(PORT, function() {
-  console.log("server has started at port " + PORT);
-});
+const PORT = process.env.PORT || 2500;
+app.listen(PORT, () => {
+    console.log("Server has started at port " + PORT);
+  });
