@@ -2,7 +2,8 @@ var express=require("express");
 var router=express.Router();
 var campground=require("../models/campgrounds");
 var comment= require("../models/comment");
-var middleware=require("../middleware")
+var middleware=require("../middleware");
+
 router.get("/books/:id/comments/new", middleware.isLoggedIn ,(req,res)=>{
     campground.findById(req.params.id,(err,camp)=>{
         if(err) console.log(err);
@@ -11,15 +12,15 @@ router.get("/books/:id/comments/new", middleware.isLoggedIn ,(req,res)=>{
             res.render("add_comments",{camp});
         }
     })
-})
+});
+
 router.post("/books/:id/comments", middleware.isLoggedIn ,(req,res)=>{
-  
 
   campground.findById(req.params.id,(err,campground)=>{
     
-    if(err) console.log(err);
-    else{
+    if(err) {console.log(err);}
 
+    else{
        comment.create(req.body.comment,(err,comment)=>{
            if(err) 
              {   req.falsh("error","something went wrong");
@@ -38,13 +39,14 @@ router.post("/books/:id/comments", middleware.isLoggedIn ,(req,res)=>{
                     req.flash("success","successfully added comment");
                     res.redirect('/books/'+data._id);
                 }
-            })
+            });
             
            }
-       })
+       });
     }
-})
-})
+});
+});
+
 router.get("/books/:id/comments/:comment_id/edit",middleware.checkcommentownership, (req,res)=>{
        comment.findById(req.params.comment_id,function(err,foundcomment){
            if(err)
@@ -53,8 +55,9 @@ router.get("/books/:id/comments/:comment_id/edit",middleware.checkcommentownersh
            }else{
                   res.render("cedit", {camp_id: req.params.id, comment: foundcomment});
            }
-       })
-})
+       });
+});
+
 router.put("/books/:id/comments/:comment_id",middleware.checkcommentownership, (req,res)=>{
     var t=req.body.text;
     var object={text:t};
@@ -66,8 +69,9 @@ router.put("/books/:id/comments/:comment_id",middleware.checkcommentownership, (
            
             res.redirect("/books/"+ req.params.id);
         }
-    })
-})
+    });
+});
+
 router.delete("/books/:id/comments/:comment_id/",middleware.checkcommentownership, (req,res)=>{
    comment.findByIdAndRemove(req.params.comment_id, function(err){
        if(err)
@@ -77,9 +81,8 @@ router.delete("/books/:id/comments/:comment_id/",middleware.checkcommentownershi
         req.flash("success","comment deleted");
            res.redirect("/books/"+req.params.id);
        }
-   })
-})
-
+   });
+});
 
  
 module.exports=router;

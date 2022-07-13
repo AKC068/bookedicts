@@ -2,6 +2,7 @@ var campground=require("../models/campgrounds");
 var comment=require("../models/comment");
 
 var middleware={};
+
 middleware.checkcampgroundownership=function(req,res,next){
     if(req.isAuthenticated()){
         campground.findById(req.params.id,function(err,foundcampground){
@@ -22,6 +23,7 @@ middleware.checkcampgroundownership=function(req,res,next){
           res.redirect("back");
       }
  }
+
  middleware.checkcommentownership=function(req,res,next){
     if(req.isAuthenticated()){
         comment.findById(req.params.comment_id,function(err,foundcomment){
@@ -50,4 +52,6 @@ middleware.checkcampgroundownership=function(req,res,next){
     req.flash("error","you need to be log in first");
     res.redirect("/login");
  }
+
+
  module.exports=middleware;

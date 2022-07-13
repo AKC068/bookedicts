@@ -2,7 +2,8 @@
 var express=require("express");
 var router=express.Router();
 var campground=require("../models/campgrounds");
-var middleware=require("../middleware")
+var middleware=require("../middleware");
+
 router.get("/books",(req,res)=>{
     
     campground.find({},function(err,allcampgrounds){
@@ -13,6 +14,7 @@ router.get("/books",(req,res)=>{
         }
     });
 });
+
 router.get("/add_books",middleware.isLoggedIn,(req,res)=>res.render("add_books"));
 router.post('/add_books',middleware.isLoggedIn,(req,res)=>{
    var name=req.body.name;
@@ -39,11 +41,13 @@ router.get("/books/:id",(req,res)=>{
      }
      });
 });
+
  router.get("/books/:id/edit",middleware.checkcampgroundownership, (req,res)=>{
     campground.findById(req.params.id,function(err,foundcampground){
     res.render("edit",{campground: foundcampground});
-    })
- })
+    });
+ });
+
  router.put("/books/:id",middleware.checkcampgroundownership, function(req,res){
     var name=req.body.name;
     var price=req.body.price;
@@ -57,9 +61,11 @@ router.get("/books/:id",(req,res)=>{
          }else{
              res.redirect("/books/"+uc._id);
          }
-     })
- })
+     });
+ });
+
  //destroy books route
+
  router.delete("/books/:id",middleware.checkcampgroundownership, function(req,res){
      campground.findByIdAndRemove(req.params.id,function(err){
          if(err){
@@ -67,7 +73,7 @@ router.get("/books/:id",(req,res)=>{
          }else{
              res.redirect("/books");
          }
-     })
- })
+     });
+ });
 
 module.exports=router;
