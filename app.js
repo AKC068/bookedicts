@@ -22,6 +22,7 @@ mongoose.connect(process.env.MONGO_DB, {
   })
   .then(() => console.log("MongoDB connected....."))
   .catch((err) => console.log(err));
+mongoose.set("strictQuery", false);
 
 app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
